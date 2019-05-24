@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+    {% load staticfiles %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    <li class="list-group-item"><b><a href="{% url 'social_content:create'%}">Создать</a></b></li>
+{% endif %}
+
+{% if content_detail.user == request.user or request.user.is_superuser%}
+<li class="list-group-item"><b><a href="{% url 'social_content:edit' slug=content_detail.slug id=content_detail.id%}">Редактировать</a></b>
+<li class="list-group-item"><b><a href="{% url 'social_content:delete' slug=content_detail.slug id=content_detail.id%}">Удалить</a></b>
+    {% endif %}
+
+
+
+
+<main role="main" class="container">
+    <h1>Автор {{content_detail.user}}</h1>
+    <h2>{{content_detail.title}}</h2>
+    {% load thumbnail %}
+    {% thumbnail content_detail.image "300" as im %}
+
+        <a href="{{ content_detail.image.url }}">
+        <img src="{{im.url}}">
+    </a>
+    {% endthumbnail %}
+
+    <br>
+    <br>
+    {{content_detail.entry|safe }}
+
+
+{% with total_likes=content_detail.user_likes.count user_likes=content_detail.user_likes.all %}
+ <div class="image-info">
+                <div>
+
+
+<br><hr>
+
+
+ <!-- End количество просмотров -->
+
+ <!-- likes-->
+  <span class="count">
+ <span class="total">{{ total_likes }}</span>
+like{{ total_likes|pluralize }}
+ </span>
+ <!--End  likes-->
+
+{% if request.user.is_authenticated %}
+
+
+                    <a href="#" data-id="{{ content_detail.id }}" data-action="{% if request.user in user_likes %}un{% endif %}like" class="like button">
+                        {% if request.user not in user_likes %}
+                            <b>Нравится</b>
+                        {% else %}
+                            <b>Не нравится</b>
+                        {% endif %}
+                    </a>
+                </div>
+
+
+        </div>
+
+
+{% else %}
+    <br><br>
+    {{ content_detail.entry|safe}}
+
+
+ {% endif %}
+<br><br>
+
+
+        <div class="image-likes">
+            {% for user in content_detail.user_likes.all %}
+                <div>
+                {% if user.profile.photo %}
+                   <img src="{{ user.profile.photo.url }}" width="60px" height="60px">
+                    {% else %}
+                    <img src="{%static "no_image_app_content.png" %}"  width="60px" height="60px">
+                    {% endif %}
+                    <p>{{ user.first_name }}</p>
+                </div>
+            {% empty %}
+                Пока нет лайков. Оцените первым.
+            {% endfor %}
+        </div>
+    {% endwith %}
+
+{% with total_favorite_articles=Profille.user_likes.count user_favorite_articles=Profile.user_likes.all %}
+
+<a href='#' class='article' data-action='{% if content_detail in request.user.profile.favorite_articles.all %}remove_from_favorite{%else%}add_to_favorites{% endif %}' data-id="{{ content_detail.id }}" data-slug='{{content_detail.slug}'>
+    {% if content_detail in request.user.profile.favorite_articles.all %}
+        <b>Отписаться</b>
+    {% else %}
+        <b>Подписаться</b>
+    {% endif %}
+    
+{% endwith %}
+    </main>
+{% endblock %}
+{% block ajax_and_jquery %}
+    $('a.like').click(function(e){
+e.preventDefault();
+
+$.post('{% url "social_content:like" %}',
+    {
+        id: $(this).data('id'),
+        action: $(this).data('action')
+    },
+    function(data){
+        if (data['status'] == 'ok')
+        {
+            var previous_action = $('a.like').data('action');
+            // toggle data-action
+            $('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
+            // toggle link text
+            $('a.like').text(previous_action == 'like' ? 'Unlike' : 'Like');
+
+
+            // update total likes
+            var previous_likes = parseInt($('span.count .total').text());
+            $('span.count .total').text(previous_action == 'like' ? previous_likes + 1 : previous_likes - 1);
+        }
+});
+
+
+});
+
+$('a.article').click(function(e){
+    e.preventDefault();
+    var article_slug = $(this).attr('data-slug');
+    $.post('{% url "social_content:add_to_favorites" %}',
+    {
+        id: $(this).data('id'),
+        slug: $(this).data('slug'),
+        action: $(this).data('action'),
+    },
+    function(data){
+            {
+              var previous_action = $('a.article').data('action')
+              $('a.article').data('action', previous_action == 'add_to_favorites' ? 'remove_from_favorite':'add_to_favorites' )
+              $('a.article').text(previous_action == 'add_to_favorites' ? 'remove_from_favorite':'add_to_favorites');
+            }
+        });
+});
+
+    {% endblock %}

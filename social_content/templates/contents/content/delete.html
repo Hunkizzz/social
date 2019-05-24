@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form action="." method="post" name="form" enctype="multipart/form-data">
+
+        <h3>Вы уверены, что хотите удалить новость?</h3>
+        {% csrf_token %}
+        <input type="submit" class="button" value="Удалить"/>
+    </form>
+
+{% endblock %}

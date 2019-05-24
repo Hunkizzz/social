@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% for post in object_list %}
+            <a href="/news/detail/{{post.id}}/{{post.title}}">
+                <h3>{{post.title}}</h3>
+            </a>
+
+    {% endfor %}
+{% endblock %}

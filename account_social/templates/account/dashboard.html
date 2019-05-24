@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<br>
+    <h2>Панель управления кабинета.</h2>
+
+<li class="list-group-item"><b><a href="/account/edit">редактировать профиль</a></b></li>
+    <li class="list-group-item"><b>Login:</b> {{username}}</li>
+    <li class="list-group-item"><b>Обо мне:</b> {{profile.about_me|safe}}</li>
+    <li class="list-group-item"> ip адрес: {{ip_address}} </li>
+
+
+<br>
+
+
+    {% load thumbnail %}
+
+
+    {% thumbnail profile.photo "200"  as im %}
+    <a href="{{ profile.photo.url }}">
+    <img src="{{ im.url }}"  class="image-detail">
+    </a>
+    <br>
+
+    {% endthumbnail %}
+    <p> Избранное:
+        {% for Article in profile.favorite_articles.all %}
+            <li class='list-group-item'><a href='/news/detail/{{Article.id}}/{{Article.title}}' style="text-decoration:none">{{Article.title}}</a></li>
+        {% empty %}
+            У вас нет избранных записей
+        {% endfor %}
+</p>
+<div class="jumbotron">
+            <div class="container">
+
+        <p>
+            <a href="/" class="btn btn-success btn-lg">Главная страница</a>
+            <a href="/account/news" class="btn btn-primary btn-lg">Новости</a>
+
+
+        </p>
+            </div>
+        </div>
+
+
+
+
+{% endblock %}

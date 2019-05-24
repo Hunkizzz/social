@@ -1,0 +1,39 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "mk# Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
+            "title": "Home"
+        },
+        {
+            "location": "/#commands",
+            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.",
+            "title": "Commands"
+        },
+        {
+            "location": "/#project-layout",
+            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
+            "title": "Project layout"
+        },
+        {
+            "location": "/tutorial/markdown-tutorial/",
+            "text": "\u041e \u043f\u0440\u043e\u0435\u043a\u0442\u0435\n\n\n\u0444\u044b\u0430\u0444\u044b\u0430\n\n\n\u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442\n\n\n\u041a\u043e\u0434\n\n\nfrom django.contrib import admin\nfrom django.urls import path\n\nurlpatterns = [\n    path('admin/', admin.site.urls),\n]\n\n\n\n\npath('admin/', admin.site.urls)\n\n\n\nfrom django.contrib import admin\nfrom django.urls import path\n\nurlpatterns = [\n    path('admin/', admin.site.urls),\n]",
+            "title": "MarkDown"
+        },
+        {
+            "location": "/tutorial/markdown-tutorial/#_1",
+            "text": "",
+            "title": "\u041e \u043f\u0440\u043e\u0435\u043a\u0442\u0435"
+        },
+        {
+            "location": "/tutorial/markdown-tutorial/#_2",
+            "text": "\u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442",
+            "title": "\u0444\u044b\u0430\u0444\u044b\u0430"
+        },
+        {
+            "location": "/tutorial/markdown-tutorial/#_3",
+            "text": "from django.contrib import admin\nfrom django.urls import path\n\nurlpatterns = [\n    path('admin/', admin.site.urls),\n]  path('admin/', admin.site.urls)  \nfrom django.contrib import admin\nfrom django.urls import path\n\nurlpatterns = [\n    path('admin/', admin.site.urls),\n]",
+            "title": "\u041a\u043e\u0434"
+        }
+    ]
+}

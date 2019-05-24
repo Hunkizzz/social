@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} Добавить новость {% endblock %}
+{% block content %}
+
+
+        <form action="" method="post" name="form" enctype="multipart/form-data">
+            {{ form | crispy }}
+            {{form.media}}
+            {% csrf_token %}
+        <input type="submit" value="Сохранить">
+
+    </form>
+
+{% endblock %}

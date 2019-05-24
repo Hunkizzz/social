@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+
+<main role="main" class="container">
+    <h1>Редактировать страницу:</h1>
+    <form action="." method="post" enctype="multipart/form-data">
+
+
+    {{user_form|crispy}}
+    {{profile_form|crispy}}
+    {% csrf_token %}
+    <br>
+    <p><input type="submit" value="Применить"></p>
+        </form>
+</main>
+{%endblock%}
